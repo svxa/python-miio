@@ -41,6 +41,7 @@ croniter = ">=1"
 defusedxml = "^0"
 pydantic = "^1"
 PyYAML = ">=5,<7"
+crc = ">=4.3"
 
 # doc dependencies
 sphinx = { version = "*", optional = true }

@@ -22,7 +22,7 @@ from miio.integrations.cgllc.airmonitor import AirQualityMonitor, AirQualityMoni
 from miio.integrations.chuangmi.camera import ChuangmiCamera
 from miio.integrations.chuangmi.plug import ChuangmiPlug
 from miio.integrations.chuangmi.remote import ChuangmiIr
-from miio.integrations.chunmi.cooker import Cooker
+from miio.integrations.chunmi.cooker import Cooker, CookerWY3
 from miio.integrations.deerma.humidifier import AirHumidifierJsqs, AirHumidifierMjjsq
 from miio.integrations.dmaker.airfresh import AirFreshA1, AirFreshT2017
 from miio.integrations.dmaker.fan import Fan1C, FanMiot, FanP5
