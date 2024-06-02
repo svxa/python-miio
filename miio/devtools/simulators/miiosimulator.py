@@ -1,11 +1,16 @@
 """Implementation of miio simulator."""
+
 import asyncio
 import json
 import logging
 from typing import List, Optional, Union
 
 import click
-from pydantic import BaseModel, Field, PrivateAttr
+
+try:
+    from pydantic.v1 import BaseModel, Field, PrivateAttr
+except ImportError:
+    from pydantic import BaseModel, Field, PrivateAttr
 from yaml import safe_load
 
 from miio import PushServer

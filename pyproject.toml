@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-miio"
-version = "0.6.0.dev"
+version = "0.6.0.dev0"
 description = "Python library for interfacing with Xiaomi smart appliances"
 authors = ["Teemu R <tpr@iki.fi>"]
 repository = "https://github.com/rytilahti/python-miio"
@@ -39,7 +39,7 @@ tqdm = "^4"
 micloud = { version = ">=0.6" }
 croniter = ">=1"
 defusedxml = "^0"
-pydantic = "^1"
+pydantic = ">=1,<3"
 PyYAML = ">=5,<7"
 crc = ">=4.3"
 
@@ -47,17 +47,19 @@ crc = ">=4.3"
 sphinx = { version = "*", optional = true }
 sphinx_click = { version = "*", optional = true }
 sphinxcontrib-apidoc = { version = "*", optional = true }
-sphinx_rtd_theme = { version = "*", optional = true }
+sphinx_rtd_theme = { version = ">=1.3.0", optional = true }
 myst-parser = { version = "*", optional = true }
 
 # optionals
 netifaces = { version = "^0", optional = true }
 android_backup = { version = "^0", optional = true }
+crcmod = { version = "^1.7", optional = true }
 
 [tool.poetry.extras]
 docs = ["sphinx", "sphinx_click", "sphinxcontrib-apidoc", "sphinx_rtd_theme", "myst-parser"]
 updater = ["netifaces"]
 backup_extract = ["android_backup"]
+crcmod = ["crcmod"]
 
 [tool.poetry.dev-dependencies]
 pytest = ">=6.2.5"

@@ -74,9 +74,11 @@ ROCKROBO_T7S = "roborock.vacuum.a14"
 ROCKROBO_T7SPLUS = "roborock.vacuum.a23"
 ROCKROBO_S7_MAXV = "roborock.vacuum.a27"
 ROCKROBO_S7_PRO_ULTRA = "roborock.vacuum.a62"
+ROCKROBO_S8_PRO_ULTRA = "roborock.vacuum.a70"
 ROCKROBO_Q5 = "roborock.vacuum.a34"
 ROCKROBO_Q7_MAX = "roborock.vacuum.a38"
 ROCKROBO_Q7PLUS = "roborock.vacuum.a40"
+ROCKROBO_Q_REVO = "roborock.vacuum.a75"
 ROCKROBO_G10S = "roborock.vacuum.a46"
 ROCKROBO_G10 = "roborock.vacuum.a29"
 
@@ -103,9 +105,11 @@ SUPPORTED_MODELS = [
     ROCKROBO_S7,
     ROCKROBO_S7_MAXV,
     ROCKROBO_S7_PRO_ULTRA,
+    ROCKROBO_S8_PRO_ULTRA,
     ROCKROBO_Q5,
     ROCKROBO_Q7_MAX,
     ROCKROBO_Q7PLUS,
+    ROCKROBO_Q_REVO,
     ROCKROBO_G10,
     ROCKROBO_G10S,
     ROCKROBO_S6_MAXV,
@@ -118,8 +122,12 @@ SUPPORTED_MODELS = [
 AUTO_EMPTY_MODELS = [
     ROCKROBO_S7,
     ROCKROBO_S7_MAXV,
+    ROCKROBO_S8_PRO_ULTRA,
     ROCKROBO_Q7_MAX,
+    ROCKROBO_Q_REVO,
 ]
+
+MODELS_WITH_MOP = [ROCKROBO_S7, ROCKROBO_S7_MAXV, ROCKROBO_Q_REVO]
 
 
 class RoborockVacuum(Device):
@@ -975,7 +983,7 @@ class RoborockVacuum(Device):
     @command()
     def mop_intensity(self) -> MopIntensity:
         """Get mop scrub intensity setting."""
-        if self.model not in [ROCKROBO_S7, ROCKROBO_S7_MAXV]:
+        if self.model not in MODELS_WITH_MOP:
             raise UnsupportedFeatureException(
                 "Mop scrub intensity not supported by %s", self.model
             )
@@ -985,7 +993,7 @@ class RoborockVacuum(Device):
     @command(click.argument("mop_intensity", type=EnumType(MopIntensity)))
     def set_mop_intensity(self, mop_intensity: MopIntensity):
         """Set mop scrub intensity setting."""
-        if self.model not in [ROCKROBO_S7, ROCKROBO_S7_MAXV]:
+        if self.model not in MODELS_WITH_MOP:
             raise UnsupportedFeatureException(
                 "Mop scrub intensity not supported by %s", self.model
             )
@@ -1054,6 +1062,18 @@ class RoborockVacuum(Device):
         Feel free to contribute information from your vacuum if it is not yet listed.
         """
         return self.send("get_fw_features")
+
+    def _initialize_descriptors(self) -> None:
+        """Initialize device descriptors.
+
+        Overridden to collect descriptors also from the update helper.
+        """
+        if self._initialized:
+            return
+
+        super()._initialize_descriptors()
+        res = self.status()
+        self._descriptors.descriptors_from_object(res)
 
     @classmethod
     def get_device_group(cls):
